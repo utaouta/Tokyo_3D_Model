@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tokyo Flood VR FPV Simulator</title>
+    <link rel="stylesheet" type="text/css" href="css/widgets.css">
+    <link rel="stylesheet" type="text/css" href="css/bucket.css">
+    <link rel="stylesheet" type="text/css" href="css/hover.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.73/Build/Cesium/Cesium.js"></script>
+    <script src = "Sandcastle-header.js"></script>
+
+
+</head>
+<body>
+<div id="cesiumContainer" class="fullSize"></div>
+<div id="toolbar" class = "container">
+    <div class="row row-cols-auto">
+        <div class="col text-light bg-light bg-opacity-25 rounded " style="margin-right: 5px;" >
+<!--            <p class="text-light">Water Level</p>-->
+
+                <label >Water Level &nbsp</label>
+            <input type="range" min="0" max="200" step="1"  data-bind="value: height, valueUpdate: 'input'">
+            <input type="text" size="12" style="width: 40px; margin-top:5px "  data-bind="value: height">
+                <span>m</span>
+            <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#water-modal"></i>
+        </div>
+
+        <div class="col text-light bg-light bg-opacity-25 rounded  " style="margin-right: 5px;">
+            <span>Inundation Level</span>
+            <input type="checkbox" size="5" style="margin-top:12px "  data-bind="checked: display">
+            <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#inundation-modal"></i>
+        </div>
+        <div class="col text-light bg-light bg-opacity-25 rounded " style="margin-right: 5px;">
+            FPV Mode:
+            <button type="button" class="cesium-button" onclick = "firstPersonCameraController.start()">Start</button>
+            <button type="button" class="cesium-button" onclick = "firstPersonCameraController.stop()">Stop</button>
+            <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#fpv-modal"></i>
+        </div>
+        <!-- Button trigger modal -->
+        <button id="hello" class="btn btn-primary" data-bind="css: { &quot;cesium-button-disabled&quot; : _isOrthographic }, attr: { title: tooltip },click: command,enable: isVREnabled,cesiumSvgPath: { path: isVRMode ? _exitVRPath : _enterVRPath, width: 32, height: 32 }" title="Enter VR mode">
+            About
+            <i class="bi bi-info-circle "></i>
+        </button>
+    </div>
+
+</div>
+
+
+
+<!-- modal itself -->
+<div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Get the Latest Updates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+                <label for="modal-email" class="form-label">Your email address:</label>
+                <input type="text" class="form-control" id="modal-email" placeholder="e.g. mario@example.com">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="water-modal" tabindex="-1" aria-labelledby="water-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="water-title" id="water-title">Water Level</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Got it!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inundation-modal" tabindex="-1" aria-labelledby="inundation-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="inundation-title" id="inundation-title">Get the Latest Updates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="fpv-modal" tabindex="-1" aria-labelledby="fpv-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="water-title" id="fpv-title">Get the Latest Updates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src = "firstPersonView.js"></script>
+<script src = "water.js"></script>
+
+<script>
+    // var rect = cesium-viewer-vrContainer.getBoundingClientRect();
+    // console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+    const worldTerrain = Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+    });
+
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+        vrButton: true,
+        terrainProvider: worldTerrain,
+    });
+
+    const firstPersonCameraController = new Cesium.FirstPersonCameraSimulator({
+        cesiumViewer : viewer
+    });
+
+
+
+    const centre = Cesium.Cartesian3.fromDegrees( 139.7594327, 35.67905);
+
+    const offset = new Cesium.Cartesian3(0.0, -4790.0, 3930.0)
+
+
+    viewer.camera.lookAt(centre, offset);
+    viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+
+    getWater();
+
+
+
+</script>
+</body>
+</html>
