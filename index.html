@@ -56,17 +56,35 @@
 
 
 <!-- modal itself -->
-<div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="load-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog  modal-lg ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-title">Get the Latest Updates</h5>
+                <h5 class="modal-title" id="modal-title">Tokyo 3D Flood Model</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
-                <label for="modal-email" class="form-label">Your email address:</label>
-                <input type="text" class="form-control" id="modal-email" placeholder="e.g. mario@example.com">
+                <h5>About</h5>
+                <p align ="justify">  The purpoese of this website is to visualise 3D buildings and flood in central Tokyo area with immersive user experience.<br><br>
+
+                    Buildings on this website are in 3D Tiles format, representing buildings in Chiyoda ward of LOD1 and LOD2. On this website, users are allowed to ajust water level, view buildings'
+                    inundation level and explore the area in first person view. Moreover, the user can experience all functions above in VR (virtual reality) Mode.<br><br>
+                    It might take sometime to load the resources. Thank you for your patience~</p>
+                <h5>How to use</h5>
+                <img src ="image/interface.png"  class="img-fluid" alt="Responsive image">
+                <h5>Panel Utilities</h5>
+                <h6><b>①</b> Water Level</h6>
+                <p align ="justify"> Drag the slider on the left or manually enter a number in the textbox on the right to adjust water level. </p><br>
+                <h6><b>②</b> Inundation Level</h6>
+                <p align ="justify"> Check/Uncheck the box to show/hide inundation levels of buildings. </p><br>
+                <h6><b>③</b> First-Person Mode</h6>
+                <p align ="justify"> Press start to enter First-Person mode. Use 'W A S D' to control direction, hold mouse left click to control heading.
+                    Hold 'Shift' to run. Press stop to exit First-Person mode.  </p><br>
+                <h6><b>④</b> Illumination Adjustment</h6>
+                <p align ="justify"> Adjust the scale bar to modify illumination according to the time in real life. </p><br>
+                <h6><b>⑤</b> VR Mode</h6>
+                <p align ="justify"> Press the button to toggle VR mode.</p>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -113,7 +131,7 @@
 </div>
 
 <div class="modal fade" id="fpv-modal" tabindex="-1" aria-labelledby="fpv-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="water-title" id="fpv-title">Get the Latest Updates</h5>
@@ -124,18 +142,20 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#water-modal">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+
 <script src = "firstPersonView.js"></script>
 <script src = "water.js"></script>
 
 <script>
-    // var rect = cesium-viewer-vrContainer.getBoundingClientRect();
-    // console.log(rect.top, rect.right, rect.bottom, rect.left);
+    $(document).ready(function(){
+        $("#load-modal").modal('show');
+    });
 
     const worldTerrain = Cesium.createWorldTerrain({
         requestWaterMask: true,
