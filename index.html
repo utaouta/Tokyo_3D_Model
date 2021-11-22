@@ -27,14 +27,14 @@
 <!--            <p class="text-light">Water Level</p>-->
 
                 <label >Water Level &nbsp</label>
-            <input type="range" min="0" max="200" step="1"  data-bind="value: height, valueUpdate: 'input'">
+            <input type="range" min="0" max="200" step="1"   data-bind="value: height, valueUpdate: 'input'">
             <input type="text" size="12" style="width: 40px; margin-top:5px "  data-bind="value: height">
                 <span>m</span>
             <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#water-modal"></i>
         </div>
 
         <div class="col text-light bg-light bg-opacity-25 rounded  " style="margin-right: 5px;">
-            <span>Inundation Level</span>
+            <span>Inundation Rank</span>
             <input type="checkbox" size="5" style="margin-top:12px "  data-bind="checked: display">
             <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#inundation-modal"></i>
         </div>
@@ -45,7 +45,7 @@
             <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#fpv-modal"></i>
         </div>
         <!-- Button trigger modal -->
-        <button id="hello" class="btn btn-primary" >
+        <button id="about" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#load-modal" >
             About
             <i class="bi bi-info-circle "></i>
         </button>
@@ -55,7 +55,7 @@
 
 
 
-<!-- modal itself -->
+<!-- Below is the onload information page -->
 <div class="modal fade" id="load-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog  modal-lg ">
         <div class="modal-content">
@@ -67,64 +67,104 @@
                 <h5>About</h5>
                 <p align ="justify">  The purpoese of this website is to visualise 3D buildings and flood in central Tokyo area with immersive user experience.<br><br>
 
-                    Buildings on this website are in 3D Tiles format, representing buildings in Chiyoda ward of LOD1 and LOD2. On this website, users are allowed to ajust water level, view buildings'
-                    inundation level and explore the area in first person view. Moreover, the user can experience all functions above in VR (virtual reality) Mode.<br><br>
+                    Buildings on this website are in <a href="https://cesium.com/blog/2015/08/10/introducing-3d-tiles/" target="_blank">3D Tiles format</a>, representing buildings in Chiyoda ward of
+                    <a href="https://en.wikipedia.org/wiki/Level_of_detail_(computer_graphics)" target="_blank">LOD1 and LOD2</a>. On this website, users are allowed to ajust water level, view buildings'
+                    inundation rank and explore the area in first person view. Moreover, the user can experience all functions above in VR (virtual reality) Mode.<br><br>
                     It might take sometime to load the resources. Thank you for your patience~</p>
                 <h5>How to use</h5>
                 <img src ="image/interface.png"  class="img-fluid" alt="Responsive image">
-                <h5>Panel Utilities</h5>
-                <h6><b>①</b> Water Level</h6>
+                <h5>Panel Utilities (Click <i class="bi bi-info-circle hvr-pulse" ></i> for detailed information)</h5><br>
+                <h6><b>①</b> Water Level <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#water-modal"></i></h6>
                 <p align ="justify"> Drag the slider on the left or manually enter a number in the textbox on the right to adjust water level. </p><br>
-                <h6><b>②</b> Inundation Level</h6>
-                <p align ="justify"> Check/Uncheck the box to show/hide inundation levels of buildings. </p><br>
-                <h6><b>③</b> First-Person Mode</h6>
+                <h6><b>②</b> Inundation rank <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#inundation-modal"></i></h6>
+                <p align ="justify"> Check/Uncheck the box to show/hide inundation rank of buildings. </p><br>
+                <h6><b>③</b> First-Person Mode <i class="bi bi-info-circle hvr-pulse" data-bs-toggle="modal" data-bs-target="#fpv-modal"></i></h6>
                 <p align ="justify"> Press start to enter First-Person mode. Use 'W A S D' to control direction, hold mouse left click to control heading.
                     Hold 'Shift' to run. Press stop to exit First-Person mode.  </p><br>
                 <h6><b>④</b> Illumination Adjustment</h6>
                 <p align ="justify"> Adjust the scale bar to modify illumination according to the time in real life. </p><br>
-                <h6><b>⑤</b> VR Mode</h6>
+                <h6><b>⑤</b> VR Mode </h6>
                 <p align ="justify"> Press the button to toggle VR mode.</p>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+<!--detailed modal page of water level -->
 <div class="modal fade" id="water-modal" tabindex="-1" aria-labelledby="water-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="water-title" id="water-title">Water Level</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+                <h5>Detail</h5>
+                <p>Water Level on this website is represented by a polygon surface (2D). Buildings which intersect with
+                the water surface will be coloured with red. However, an error of ~10m is generated due to the utilisation 2D surface
+                and the rendering issue when importing the buildings. The level of water denotes water height from sea surface.</p>
+                <h5>Instruction</h5>
+                <img src ="image/water.png"  class="img-fluid" alt="Responsive image">
+                <p>Water level can be adjusted by either dragging or clicking at the slider bar. When adjusting the slider,
+                    the water level will be displayed in the textbox on the right. Also, the user can adjust the water level by entering a number
+                    into the text area and then press 'Enter'.  </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Got it!</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#load-modal">Back to about</button>
             </div>
         </div>
     </div>
 </div>
 
+<!--detailed modal page of inundation rank -->
 <div class="modal fade" id="inundation-modal" tabindex="-1" aria-labelledby="inundation-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="inundation-title" id="inundation-title">Get the Latest Updates</h5>
+                <h5 class="inundation-title" id="inundation-title">Inundation Rank</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+                <h5>Detail</h5>
+                <p>Inundation rank is a built in attribute of every building which suggests the highest level of flood a building can handle. In japan,
+                buildings are divided into 4 different ranking level. Figure below denotes the relationship between Inundation rank and water level correspondingly:</p>
+                <img src ="image/inundation.png"  class="img-fluid" alt="Responsive image">
+                <p>To make reduce system usage, this website only show Inundation rank of buildings of Arakawa Drainage area.  </p>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Colour</th>
+                        <th scope="col">Drainage Area</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><font color="GREENYELLOW">GREENYELLOW</font></td>
+                        <td>Arakawa</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><font color="DARKSALMON">DARKSALMON</font></td>
+                        <td>Arakawa</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><font color="HOTPINK">HOTPINK</font></td>
+                        <td>Arakawa</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#load-modal">Back to about</button>
             </div>
         </div>
     </div>
@@ -134,15 +174,58 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="water-title" id="fpv-title">Get the Latest Updates</h5>
+                <h5 class="water-title" id="fpv-title">First-Person View Mode</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis, exercitationem laboriosam nihil minus voluptatibus harum aliquam consequatur pariatur inventore dignissimos illum excepturi ratione ipsum sit iusto alias eligendi fugit laborum?</p>
+                <h5>Detail</h5>
+                <p>First-Person View mode allows the user to explore central Tokyo with an immersive experience. When the start button is clicked,
+                the viewport will vertically drop to the ground at the exact position where the user was. Therefore, please zoom to a certain area you want to explore
+                before start or you have to run to the place by yourself~ By pressing stop button you will be transported back to the initial position when entering the
+                website.</p>
+                <h5>Instruction</h5>
+                <p>The Control of movement has no difference with most 3D games: </p>
+                <table class="table table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Key</th>
+                        <th scope="col">Movement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>W</td>
+                        <td>Forward</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>A</td>
+                        <td>Left</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>D</td>
+                        <td>Right</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>S</td>
+                        <td>Back</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Shift</td>
+                        <td>Run</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#water-modal">Submit</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#load-modal">Back to about</button>
             </div>
         </div>
     </div>
