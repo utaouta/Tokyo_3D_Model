@@ -5,16 +5,16 @@ Cesium.FirstPersonCameraSimulator = (function () {
     const Cartesian3 = Cesium.Cartesian3;
     let key_pressed={};
     let DIRECTION_NONE = -1;
-
+    let HUMAN_WALKING_SPEED = 0;
 
     const DIRECTION_FORWARD = 0;
     const DIRECTION_BACKWARD = 1;
     const DIRECTION_LEFT = 2;
     const DIRECTION_RIGHT = 3;
 
-    const STOP_MOVING = 0;
-    const HUMAN_WALKING_SPEED = 1.5;
-    const HUMAN_RUNNING_SPEED = 8;
+    // const STOP_MOVING = 0;
+    // const HUMAN_WALKING_SPEED = 1.5;
+    // const HUMAN_RUNNING_SPEED = 8;
 
     const HUMAN_EYE_HEIGHT = 1.7;
     const MAX_PITCH_IN_DEGREE = 88;
@@ -78,32 +78,66 @@ Cesium.FirstPersonCameraSimulator = (function () {
    firstPersonSimulator._onKeyDown = function (event) {
         const keyCode = event.keyCode;
 
-        this._direction = DIRECTION_NONE;
         console.log(key_pressed);
-       console.log(key_pressed[0]);
-       key_pressed[event.keyCode] = event.type == 'keydown';
 
-       if(key_pressed[65]){
-           this._direction = DIRECTION_LEFT;
+       key_pressed[event.keyCode] = event.type == 'keydown';
+       if (keyCode != 16){
+           this._direction = DIRECTION_NONE;
+           console.log("I'm triggered");
        }
-       if(key_pressed[87]){
-           this._direction = DIRECTION_FORWARD;
+           // if(key_pressed[65]){
+       //     this._direction = DIRECTION_LEFT;
+       // }
+       // if(key_pressed[87]){
+       //     this._direction = DIRECTION_FORWARD;
+       // }
+       // if(key_pressed[68]){
+       //     this._direction = DIRECTION_RIGHT;
+       // }
+       // if(key_pressed[83]){
+       //     this._direction = DIRECTION_BACKWARD;
+       // }
+       if (key_pressed[16]) {
+           HUMAN_WALKING_SPEED = 6;
+            }
+       else{ HUMAN_WALKING_SPEED = 1.5 }
+       console.log(HUMAN_WALKING_SPEED);
+       switch (keyCode) {
+           case "W".charCodeAt(0):
+               this._direction = DIRECTION_FORWARD;
+               break;
+           case "S".charCodeAt(0):
+               this._direction = DIRECTION_BACKWARD;
+               break;
+           case "D".charCodeAt(0):
+               this._direction = DIRECTION_RIGHT;
+               break;
+           case "A".charCodeAt(0):
+               this._direction = DIRECTION_LEFT;
+               break;
+           default:
+               break;
        }
-       if(key_pressed[68]){
-           this._direction = DIRECTION_RIGHT;
-       }
-       if(key_pressed[83]){
-           this._direction = DIRECTION_BACKWARD;
-       }
+       console.log(this._direction);
+       return;
    }
 
 
    firstPersonSimulator._onKeyUp = function (e) {
+        console.log("release" + e.keyCode);
+        if(e.keyCode != 16){
         this._direction = DIRECTION_NONE;
-        key_pressed[e.keyCode]= false;
-        // MOVING_MODE = true;
+            key_pressed[e.keyCode]= false;
+        return;
+        }
+
+       else{
+            HUMAN_WALKING_SPEED = 1.5;
+           key_pressed[e.keyCode]= false;
+        return;}
     };
 
+   //change heading pitch
     firstPersonSimulator._changeHeadingPitch = function (dt) {
         let width = this._canvas.clientWidth;
         let height = this._canvas.clientHeight;
@@ -146,6 +180,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
     let scratchNextCartographic = new Cesium.Cartographic();
 
     firstPersonSimulator._onClockTick = function (clock) {
+
         if(!this._enabled)
             return;
 
@@ -203,11 +238,12 @@ Cesium.FirstPersonCameraSimulator = (function () {
     };
 
     firstPersonSimulator._walkingSpeed = function (){
-        if (key_pressed[16]) {
-            return HUMAN_RUNNING_SPEED;
-
-        }
-        else return HUMAN_WALKING_SPEED;
+        // if (key_pressed[16]) {
+        //     return HUMAN_RUNNING_SPEED;
+        //
+        // }
+        // else
+        return HUMAN_WALKING_SPEED;
     };
 
     firstPersonSimulator._enableDefaultScreenSpaceCameraController = function (enabled) {
