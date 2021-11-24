@@ -81,7 +81,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
         console.log(key_pressed);
 
        key_pressed[event.keyCode] = event.type == 'keydown';
-       if (keyCode != 16){
+       if (keyCode != 32){
            this._direction = DIRECTION_NONE;
            console.log("I'm triggered");
        }
@@ -97,7 +97,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
        // if(key_pressed[83]){
        //     this._direction = DIRECTION_BACKWARD;
        // }
-       if (key_pressed[16]) {
+       if (key_pressed[32]) {
            HUMAN_WALKING_SPEED = 6;
             }
        else{ HUMAN_WALKING_SPEED = 1.5 }
@@ -125,7 +125,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
 
    firstPersonSimulator._onKeyUp = function (e) {
         console.log("release" + e.keyCode);
-        if(e.keyCode != 16){
+        if(e.keyCode != 32){
         this._direction = DIRECTION_NONE;
             key_pressed[e.keyCode]= false;
         return;
@@ -238,7 +238,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
     };
 
     firstPersonSimulator._walkingSpeed = function (){
-        // if (key_pressed[16]) {
+        // if (key_pressed[32]) {
         //     return HUMAN_RUNNING_SPEED;
         //
         // }
@@ -255,6 +255,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
         scene.screenSpaceCameraController.enableZoom = enabled;
         scene.screenSpaceCameraController.enableTilt = enabled;
         scene.screenSpaceCameraController.enableLook = enabled;
+        // scene.screenSpaceCameraController.lookEventTypes.CameraEventType=  {modifier : KeyboardEventModifier.CTRL, eventType : CameraEventType.LEFT_DRAG };
     };
 
     firstPersonSimulator.start = function () {
