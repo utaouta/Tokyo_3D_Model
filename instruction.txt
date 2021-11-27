@@ -1,6 +1,0 @@
-load-modal
-
- The purpoese of this website is to visualise 3D buildings and flood in central Tokyo area with immersive user experience. 
- 
- Buildings on this website are in 3D Tiles format, representing buildings in Chiyoda ward of LOD1 and LOD2. On this website, users are allowed to ajust water level, view buildings' 
- inundation level and explore the area in first person view. Moreover, the user can experience all functions above in VR (virtual reality) Mode.
