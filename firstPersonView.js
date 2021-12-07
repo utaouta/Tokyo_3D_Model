@@ -1,8 +1,9 @@
-
+//Strict mode makes it easier to write "secure" JavaScript. Only declared variable can be used
 "use strict";
 
 Cesium.FirstPersonCameraSimulator = (function () {
     const Cartesian3 = Cesium.Cartesian3;
+
     let key_pressed={};
     let DIRECTION_NONE = -1;
     let HUMAN_WALKING_SPEED = 0;
@@ -41,7 +42,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
         this._screenSpaceEventHandler.setInputAction(this._onMouseMove.bind(this),Cesium.ScreenSpaceEventType.MOUSE_MOVE);
         this._screenSpaceEventHandler.setInputAction(this._onMouseLButtonDoubleClicked.bind(this), Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
-        // needed to put focus on the canvas
+        // put focus on the Canvas
         canvas.setAttribute("tabindex", "0");
 
         canvas.onclick = function () {
@@ -85,18 +86,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
            this._direction = DIRECTION_NONE;
            console.log("I'm triggered");
        }
-           // if(key_pressed[65]){
-       //     this._direction = DIRECTION_LEFT;
-       // }
-       // if(key_pressed[87]){
-       //     this._direction = DIRECTION_FORWARD;
-       // }
-       // if(key_pressed[68]){
-       //     this._direction = DIRECTION_RIGHT;
-       // }
-       // if(key_pressed[83]){
-       //     this._direction = DIRECTION_BACKWARD;
-       // }
+
        if (key_pressed[32]) {
            HUMAN_WALKING_SPEED = 6;
             }
@@ -238,11 +228,7 @@ Cesium.FirstPersonCameraSimulator = (function () {
     };
 
     firstPersonSimulator._walkingSpeed = function (){
-        // if (key_pressed[32]) {
-        //     return HUMAN_RUNNING_SPEED;
-        //
-        // }
-        // else
+
         return HUMAN_WALKING_SPEED;
     };
 
